@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import { QUESTIONS } from "../constants";
 
 const Question = ({
   text,
@@ -43,13 +44,23 @@ const Question = ({
         {["沒興趣", "行", "不行"].map((item, index) => (
           <div
             key={index}
-            className={cn("flex items-center space-x-2 rounded-lg p-2")}
+            className={cn(
+              "flex items-center space-x-2 rounded-lg p-2",
+              item === value ? "bg-slate-200" : "",
+            )}
           >
-            <RadioGroupItem value={item} checked={item === value} />
+            <RadioGroupItem
+              value={item}
+              checked={item === value}
+              disabled={text === QUESTIONS[2] && item === "沒興趣"}
+            />
             <Label
               className={cn(
                 "whitespace-nowrap",
                 item === value ? "font-extrabold" : "",
+                text === QUESTIONS[2] && item === "沒興趣"
+                  ? "font-extralight text-gray-300"
+                  : "",
               )}
             >
               {item}

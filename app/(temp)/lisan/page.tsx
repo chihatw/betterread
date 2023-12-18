@@ -35,12 +35,18 @@ const Page = () => {
   const [value, setValue] = useState<string[][]>([]);
 
   useEffect(() => {
-    const initialValue = lines_j.map((line) => QUESTIONS.map((q) => "沒興趣"));
+    const initialValue = lines_j.map((line) =>
+      QUESTIONS.map((q) => {
+        if (q === QUESTIONS[2]) return "行";
+        return "沒興趣";
+      }),
+    );
     setValue(initialValue);
   }, []);
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("fetched");
       const snapshot = await getDoc(doc(db, "temp", "lisan"));
       if (snapshot.exists()) {
         const { string } = snapshot.data();
@@ -52,6 +58,7 @@ const Page = () => {
   }, []);
 
   const handleUpdate = (value: string[][]) => {
+    console.log("updated");
     updateDoc(doc(db, "temp", "lisan"), { string: JSON.stringify(value) });
   };
 
