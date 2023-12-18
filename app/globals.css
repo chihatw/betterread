@@ -7,8 +7,3 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
   }
 }
-
-/* hide emulators bottom caution */
-.firebase-emulator-warning {
-  display: none;
-}
