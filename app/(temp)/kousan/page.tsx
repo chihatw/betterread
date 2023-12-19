@@ -1,10 +1,6 @@
-"use client";
-
 import Sentence from "@/features/temp/components/Sentence";
-import { QUESTIONS } from "@/features/temp/constants";
-import { db } from "@/firebase/client";
-import { doc, getDoc, updateDoc } from "@firebase/firestore";
-import { useEffect, useState } from "react";
+import { DOCID } from "@/features/temp/constants";
+import { getAnswers } from "@/firebase/admin";
 
 const japanese = `睡眠不足
 近所で家を建てています。
@@ -27,36 +23,8 @@ const chinese = `睡眠不足
 const lines_j = japanese.split("\n");
 const lines_c = chinese.split("\n");
 
-const Page = () => {
-  const [value, setValue] = useState<string[][]>([]);
-
-  useEffect(() => {
-    const initialValue = lines_j.map((line) =>
-      QUESTIONS.map((q) => {
-        if (q === QUESTIONS[2]) return "行";
-        return "沒興趣";
-      }),
-    );
-    setValue(initialValue);
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log("fetched!");
-      const snapshot = await getDoc(doc(db, "temp", "kousan"));
-      if (snapshot.exists()) {
-        const { string } = snapshot.data();
-        const remote = JSON.parse(string);
-        setValue(remote);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const handleUpdate = (value: string[][]) => {
-    updateDoc(doc(db, "temp", "kousan"), { string: JSON.stringify(value) });
-    console.log("updated!");
-  };
+const Page = async () => {
+  const value = await getAnswers(DOCID.kousan);
 
   return (
     <div className="space-y-10 px-4">
@@ -67,7 +35,6 @@ const Page = () => {
           index={index}
           key={index}
           value={value}
-          handleUpdate={handleUpdate}
         />
       ))}
     </div>

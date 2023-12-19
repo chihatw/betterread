@@ -1,5 +1,7 @@
 "use client";
 
+import { db } from "@/firebase/client";
+import { doc, updateDoc } from "@firebase/firestore";
 import { QUESTIONS } from "../constants";
 import Question from "./Question";
 
@@ -8,14 +10,17 @@ const Sentence = ({
   japanese,
   chinese,
   value,
-  handleUpdate,
 }: {
   index: number;
   japanese: string;
   chinese: string;
   value: string[][];
-  handleUpdate: (value: string[][]) => void;
 }) => {
+  const handleUpdate = (value: string[][]) => {
+    updateDoc(doc(db, "temp", "kousan"), { string: JSON.stringify(value) });
+    console.log("updated!");
+  };
+
   if (!index) {
     return (
       <div key={index} className="flex gap-4">

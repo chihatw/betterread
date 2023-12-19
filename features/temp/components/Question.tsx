@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import { QUESTIONS } from "../constants";
+import { ENDDATE, QUESTIONS } from "../constants";
 
 const Question = ({
   text,
@@ -19,7 +19,9 @@ const Question = ({
   value: string[][];
   handleUpdate: (value: string[][]) => void;
 }) => {
-  const [value, setValue] = useState("沒興趣");
+  const now = new Date();
+  const endDate = new Date(ENDDATE);
+  const [value, setValue] = useState(text === QUESTIONS[2] ? "行" : "沒興趣");
 
   useEffect(() => {
     try {
@@ -40,6 +42,7 @@ const Question = ({
         className="flex flex-wrap"
         value={value}
         onValueChange={(value) => handleChange(value)}
+        disabled={endDate < now}
       >
         {["沒興趣", "行", "不行"].map((item, index) => (
           <div

@@ -1,17 +1,13 @@
-"use client";
-
 import Sentence from "@/features/temp/components/Sentence";
-import { QUESTIONS } from "@/features/temp/constants";
-import { db } from "@/firebase/client";
-import { doc, getDoc, updateDoc } from "@firebase/firestore";
-import { useEffect, useState } from "react";
+import { DOCID } from "@/features/temp/constants";
+import { getAnswers } from "@/firebase/admin";
 
 const japanese = `スーパー高校生
 嘉義のバンドフェスティバルに4年ぶりに学生を連れて行ってきました。
 今年は、コロナが終息してから初めて日本の高校の吹奏楽部がたくさん演奏するので、前回聞いた習志野高校をもう一度聴きに行くことにしました。
 日曜日でしたけど、強豪校の舞台がまた見れることが楽しみでした。
 習志野高校の学生は演奏したり、歌ったり、踊ったり、観客を音楽に乗せたりしてくれました。
-定番の「凱旋行進曲」の時、前回と同じように、20人くらいの金管楽器奏者が会場の後ろで演奏して、音質と音量に圧倒されられました。
+定番の「凱旋行進曲」の時、前回と同じように、20人くらいの金管楽器奏者が会場の後ろで演奏して、音質と音量に圧倒させられました。
 それに、司会者が日本語の2人と中国語の1人の3人でした。
 中国語はちょっと分かりにくかったですけど、日本語は9割くらい聞き取れて、嬉しかったです。
 とにかく、どのパフォーマンスもすごく華やかで、全員が全力を尽くす姿はとても感動的でした。
@@ -31,36 +27,8 @@ const chinese = `超級高中生
 const lines_j = japanese.split("\n");
 const lines_c = chinese.split("\n");
 
-const Page = () => {
-  const [value, setValue] = useState<string[][]>([]);
-
-  useEffect(() => {
-    const initialValue = lines_j.map((line) =>
-      QUESTIONS.map((q) => {
-        if (q === QUESTIONS[2]) return "行";
-        return "沒興趣";
-      }),
-    );
-    setValue(initialValue);
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log("fetched");
-      const snapshot = await getDoc(doc(db, "temp", "lisan"));
-      if (snapshot.exists()) {
-        const { string } = snapshot.data();
-        const remote = JSON.parse(string);
-        setValue(remote);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const handleUpdate = (value: string[][]) => {
-    console.log("updated");
-    updateDoc(doc(db, "temp", "lisan"), { string: JSON.stringify(value) });
-  };
+const Page = async () => {
+  const value = await getAnswers(DOCID.lisan);
 
   return (
     <div className="space-y-10 px-4">
@@ -71,7 +39,6 @@ const Page = () => {
           index={index}
           key={index}
           value={value}
-          handleUpdate={handleUpdate}
         />
       ))}
     </div>
