@@ -2,6 +2,8 @@ import Sentence from "@/features/temp/components/Sentence";
 import { DOCID } from "@/features/temp/constants";
 import { getAnswers } from "@/firebase/admin";
 
+export const dynamic = "force-dynamic";
+
 const japanese = `睡眠不足
 近所で家を建てています。
 毎朝、ドンドンという音が聞こえます。

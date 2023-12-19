@@ -2,6 +2,8 @@ import Sentence from "@/features/temp/components/Sentence";
 import { DOCID } from "@/features/temp/constants";
 import { getAnswers } from "@/firebase/admin";
 
+export const dynamic = "force-dynamic";
+
 const japanese = `スーパー高校生
 嘉義のバンドフェスティバルに4年ぶりに学生を連れて行ってきました。
 今年は、コロナが終息してから初めて日本の高校の吹奏楽部がたくさん演奏するので、前回聞いた習志野高校をもう一度聴きに行くことにしました。
