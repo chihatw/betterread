@@ -11,6 +11,9 @@ dependencies:
   '@firebase/firestore':
     specifier: ^4.4.0
     version: 4.4.0(@firebase/app@0.9.25)
+  '@firebase/storage':
+    specifier: ^0.12.0
+    version: 0.12.0(@firebase/app@0.9.25)
   '@hookform/resolvers':
     specifier: ^3.3.2
     version: 3.3.2(react-hook-form@7.49.2)
@@ -83,6 +86,9 @@ dependencies:
   firebase-admin:
     specifier: ^12.0.0
     version: 12.0.0(encoding@0.1.13)
+  lucide:
+    specifier: ^0.299.0
+    version: 0.299.0
   lucide-react:
     specifier: ^0.298.0
     version: 0.298.0(react@18.2.0)
@@ -307,6 +313,18 @@ packages:
     resolution: {integrity: sha512-eRKSeykumZ5+cJPdxxJRgAC3G5NknY2GwEbKfymdnXtnT0Ucm4pspfR6GT4MUQEDuJwRVbVcSx85kgJulMoFFA==}
     dependencies:
       tslib: 2.6.2
+    dev: false
+
+  /@firebase/storage@0.12.0(@firebase/app@0.9.25):
+    resolution: {integrity: sha512-SGs02Y/mmWBRsqZiYLpv4Sf7uZYZzMWVNN+aKiDqPsFBCzD6hLvGkXz+u98KAl8FqcjgB8BtSu01wm4pm76KHA==}
+    peerDependencies:
+      '@firebase/app': 0.x
+    dependencies:
+      '@firebase/app': 0.9.25
+      '@firebase/component': 0.6.4
+      '@firebase/util': 1.9.3
+      tslib: 2.6.2
+      undici: 5.26.5
     dev: false
 
   /@firebase/util@1.9.3:
@@ -3658,6 +3676,10 @@ packages:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /lucide@0.299.0:
+    resolution: {integrity: sha512-yYw6PfkpyKhNDt4Ay1lsj0wwTAoM/ccSbZdSh6b77gRMvCC2fqKed16Jo+lWbxWOAWHoxVUpO4nx72fVZvadaw==}
     dev: false
 
   /merge2@1.4.1:
