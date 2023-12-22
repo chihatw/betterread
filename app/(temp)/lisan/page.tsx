@@ -41,6 +41,7 @@ const Page = async () => {
           index={index}
           key={index}
           value={value}
+          docId={DOCID.lisan}
         />
       ))}
     </div>

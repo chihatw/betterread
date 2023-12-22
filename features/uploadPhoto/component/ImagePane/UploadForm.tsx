@@ -6,7 +6,7 @@ import { ref, uploadBytes } from "@firebase/storage";
 import { X } from "lucide-react";
 import Image from "next/image";
 import { ChangeEvent, useRef, useState } from "react";
-import { setLocalPreview } from "..";
+import { setLocalPreview } from "../..";
 
 const UploadForm = ({ filename }: { filename: string }) => {
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -43,16 +43,18 @@ const UploadForm = ({ filename }: { filename: string }) => {
   };
 
   return (
-    <form className="relative mx-auto max-w-lg" ref={formRef}>
+    <form className="relative mx-auto max-w-lg flex-1" ref={formRef}>
       {imageSrc ? (
-        <Image src={imageSrc} alt="" width={640} height={320} />
-      ) : (
-        <Input
-          type="file"
-          accept="image/*"
-          onChange={handleChange}
-          className=" mx-auto max-w-xs"
+        <Image
+          src={imageSrc}
+          alt=""
+          className="mx-auto rounded-lg"
+          width={512}
+          height={512}
+          sizes="(max-width: 768px) 100vw, (max-height: 1200px) 50vw, 50vw"
         />
+      ) : (
+        <Input type="file" accept="image/*" onChange={handleChange} />
       )}
 
       {imageSrc ? (

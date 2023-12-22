@@ -1,5 +1,6 @@
 "use client";
 
+import ImagePane from "@/features/uploadPhoto/component/ImagePane";
 import { db } from "@/firebase/client";
 import { doc, updateDoc } from "@firebase/firestore";
 import { QUESTIONS } from "../constants";
@@ -10,14 +11,16 @@ const Sentence = ({
   japanese,
   chinese,
   value,
+  docId,
 }: {
   index: number;
   japanese: string;
   chinese: string;
   value: string[][];
+  docId: string;
 }) => {
   const handleUpdate = (value: string[][]) => {
-    updateDoc(doc(db, "temp", "kousan"), { string: JSON.stringify(value) });
+    updateDoc(doc(db, "temp", docId), { string: JSON.stringify(value) });
     console.log("updated!");
   };
 
@@ -49,6 +52,10 @@ const Sentence = ({
             handleUpdate={handleUpdate}
           />
         ))}
+        <div className="space-y-2 rounded-lg bg-white bg-opacity-60 p-3">
+          <div className="text-xs font-extrabold">🎥 分鏡</div>
+          <ImagePane filename={`${docId}/${index}`} />
+        </div>
       </div>
     </div>
   );
