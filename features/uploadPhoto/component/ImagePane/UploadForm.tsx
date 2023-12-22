@@ -1,12 +1,18 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { storage } from "@/firebase/client";
 import { ref, uploadBytes } from "@firebase/storage";
 import { X } from "lucide-react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { ChangeEvent, useRef, useState } from "react";
 import { setLocalPreview } from "../..";
+
+// navigator 使用
+const SwitchInput = dynamic(
+  () => import("./SwitchInput").then((mod) => mod.SwitchInput),
+  { ssr: false },
+);
 
 const UploadForm = ({ filename }: { filename: string }) => {
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -26,11 +32,10 @@ const UploadForm = ({ filename }: { filename: string }) => {
       return;
     }
 
+    // local
     setLocalPreview(file, setImageSrc);
 
-    /**
-     * remote: ファイルをアップロード
-     */
+    // remote
     const storageRef = ref(storage, filename);
     uploadBytes(storageRef, file);
   };
@@ -48,13 +53,13 @@ const UploadForm = ({ filename }: { filename: string }) => {
         <Image
           src={imageSrc}
           alt=""
-          className="mx-auto rounded-lg"
+          className="rounded-lg"
           width={512}
           height={512}
           sizes="(max-width: 768px) 100vw, (max-height: 1200px) 50vw, 50vw"
         />
       ) : (
-        <Input type="file" accept="image/*" onChange={handleChange} />
+        <SwitchInput handleChange={handleChange} />
       )}
 
       {imageSrc ? (

@@ -11,8 +11,6 @@ const app = !getApps()[0]
   ? initializeApp({ credential: cert(serviceAccount) })
   : getApps()[0];
 
-console.log({ app });
-
 // https://firebase.google.com/docs/reference/admin/node/firebase-admin.firestore.firestoresettings.md#firestoresettings_interface
 const dbAdmin = initializeFirestore(app, { preferRest: true });
 
@@ -25,7 +23,6 @@ export const getDocumentCount = async (collection: string) => {
 
 export const getAnswers = async (docId: string) => {
   const snapshot = await dbAdmin.collection(COLLECTION).doc(docId).get();
-  console.log(snapshot.exists);
   if (snapshot.exists) {
     const { string } = snapshot.data() as any;
     const remote = JSON.parse(string);
