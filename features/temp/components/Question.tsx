@@ -32,7 +32,11 @@ const Question = ({
   const handleChange = (value: string) => {
     setValue(value);
     const updated = [...remote];
+    if (!updated[lIndex]) {
+      updated[lIndex] = ["沒興趣", "沒興趣", "行"];
+    }
     updated[lIndex][qIndex] = value;
+
     handleUpdate(updated);
   };
   return (
