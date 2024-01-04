@@ -1,10 +1,17 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { intervalToDuration } from "date-fns";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ENDDATE } from "../constants";
 
-const CountDown = () => {
+const DISPLAY_NAMES: { [key: string]: string } = {
+  kousan: "黄さん",
+  lisan: "李さん",
+};
+
+const CountDown = ({ opposite }: { opposite: string }) => {
   const now = new Date();
   const endDate = new Date(ENDDATE);
   const [value, setValue] = useState({
@@ -43,16 +50,11 @@ const CountDown = () => {
           <div className="text-lg">秒</div>
         </>
       ) : (
-        <>
-          <div>{0}</div>
-          <div className="text-lg">日</div>
-          <div>{0}</div>
-          <div className="text-lg">小時</div>
-          <div>{0}</div>
-          <div className="text-lg">分</div>
-          <div>{0}</div>
-          <div className="text-lg">秒</div>
-        </>
+        <Button>
+          <Link
+            href={`/${opposite}/preview`}
+          >{`${DISPLAY_NAMES[opposite]}の絵コンテ`}</Link>
+        </Button>
       )}
     </div>
   );

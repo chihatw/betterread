@@ -16,9 +16,11 @@ const ImagePane = ({ filename }: { filename: string }) => {
   const [imageSrc, setImageSrc] = useState("");
 
   useEffect(() => {
-    getDownloadURL(ref(storage, filename)).then((url) => {
-      setImageSrc(url || "");
-    });
+    try {
+      getDownloadURL(ref(storage, filename)).then((url) => {
+        setImageSrc(url || "");
+      });
+    } catch (e) {}
   }, [filename]);
 
   const handleReset = () => {

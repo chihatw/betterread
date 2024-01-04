@@ -26,7 +26,7 @@ const Sentence = ({
 
   if (!index) {
     return (
-      <div key={index} className="flex gap-4">
+      <div className="flex gap-4">
         <div className="basis-2 text-right text-xs">{index + 1}</div>
         <div className="flex-1 space-y-2">
           <div className="text-sm font-extrabold">{japanese}</div>
@@ -37,7 +37,7 @@ const Sentence = ({
   }
 
   return (
-    <div key={index} className="flex gap-4">
+    <div className="flex gap-4">
       <div className="basis-2 text-right text-xs">{index + 1}</div>
       <div className="flex-1 space-y-2">
         <div className="text-sm font-extrabold">{japanese}</div>
