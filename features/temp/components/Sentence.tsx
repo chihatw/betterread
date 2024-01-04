@@ -1,12 +1,10 @@
-"use client";
-
 import ImagePane from "@/features/uploadPhoto/component/ImagePane";
-import { db } from "@/firebase/client";
-import { doc, updateDoc } from "@firebase/firestore";
+import { storage } from "@/firebase/client";
+import { getDownloadURL, ref } from "@firebase/storage";
 import { QUESTIONS } from "../constants";
 import Question from "./Question";
 
-const Sentence = ({
+const Sentence = async ({
   index,
   japanese,
   chinese,
@@ -19,10 +17,13 @@ const Sentence = ({
   value: string[][];
   docId: string;
 }) => {
-  const handleUpdate = (value: string[][]) => {
-    updateDoc(doc(db, "temp", docId), { string: JSON.stringify(value) });
-    console.log("updated!");
-  };
+  const filename = `${docId}/${index}`;
+  let imageSrc = "";
+  try {
+    imageSrc = (await getDownloadURL(ref(storage, filename))) || "";
+  } catch (e) {
+    imageSrc = "";
+  }
 
   if (!index) {
     return (
@@ -49,12 +50,12 @@ const Sentence = ({
             lIndex={index}
             value={value}
             qIndex={qIndex}
-            handleUpdate={handleUpdate}
+            docId={docId}
           />
         ))}
         <div className="space-y-2 rounded-lg bg-white bg-opacity-60 p-3">
           <div className="text-xs font-extrabold">🎥 分鏡</div>
-          <ImagePane filename={`${docId}/${index}`} />
+          <ImagePane filename={`${docId}/${index}`} imageSrc={imageSrc} />
         </div>
       </div>
     </div>

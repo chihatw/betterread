@@ -2,7 +2,9 @@
 
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { db } from "@/firebase/client";
 import { cn } from "@/lib/utils";
+import { doc, updateDoc } from "@firebase/firestore";
 import { useEffect, useState } from "react";
 import { ENDDATE, QUESTIONS } from "../constants";
 
@@ -11,13 +13,13 @@ const Question = ({
   lIndex,
   qIndex,
   value: remote,
-  handleUpdate,
+  docId,
 }: {
   text: string;
   lIndex: number;
   qIndex: number;
   value: string[][];
-  handleUpdate: (value: string[][]) => void;
+  docId: string;
 }) => {
   const now = new Date();
   const endDate = new Date(ENDDATE);
@@ -39,6 +41,12 @@ const Question = ({
 
     handleUpdate(updated);
   };
+
+  const handleUpdate = (value: string[][]) => {
+    updateDoc(doc(db, "temp", docId), { string: JSON.stringify(value) });
+    console.log("updated!");
+  };
+
   return (
     <div className="space-y-2 rounded-lg bg-white bg-opacity-60 p-3">
       <div className="text-xs font-extrabold">{text}</div>

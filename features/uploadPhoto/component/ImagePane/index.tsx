@@ -2,30 +2,26 @@
 
 import { Button } from "@/components/ui/button";
 import { storage } from "@/firebase/client";
-import { deleteObject, getDownloadURL, ref } from "@firebase/storage";
+import { deleteObject, ref } from "@firebase/storage";
 import { X } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import UploadForm from "./UploadForm";
 /**
  * filename で指定された画像を cloudstorage から取得
  * 取得できなかった場合は、 upload 用の form を表示
  * navigator を使って、 mobile の場合はカメラを起動させる
  */
-const ImagePane = ({ filename }: { filename: string }) => {
-  const [imageSrc, setImageSrc] = useState("");
-
-  useEffect(() => {
-    try {
-      getDownloadURL(ref(storage, filename)).then((url) => {
-        setImageSrc(url || "");
-      });
-    } catch (e) {}
-  }, [filename]);
-
+const ImagePane = ({
+  filename,
+  imageSrc,
+}: {
+  filename: string;
+  imageSrc: string;
+}) => {
   const handleReset = () => {
     // local
-    setImageSrc("");
+    // setImageSrc("");
+    // todo server action revalidatePath?
 
     // remote
     const storageRef = ref(storage, filename);
