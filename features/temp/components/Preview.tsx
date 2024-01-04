@@ -15,7 +15,7 @@ const Preview = ({
     <>
       <div className="flex justify-center py-5">
         <Button>
-          <Link href={`/${opposite}`}>{`戻る`}</Link>
+          <Link href={`/${opposite}`}>{`アンケートに戻る`}</Link>
         </Button>
       </div>
       <div className="space-y-10 px-4">
