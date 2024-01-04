@@ -16,8 +16,6 @@ const SentencePreview = async ({
     const filename = `${docId}/${index}`;
     imageSrc = await getDownloadURL(ref(storage, filename));
   } catch (e) {}
-  // debug
-  console.log(imageSrc);
 
   if (!index) {
     return (
