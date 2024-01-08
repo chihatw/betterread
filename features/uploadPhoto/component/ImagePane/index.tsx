@@ -1,8 +1,7 @@
 "use client";
 
+import { removeRemoteImage } from "@/actions";
 import { Button } from "@/components/ui/button";
-import { storage } from "@/firebase/client";
-import { deleteObject, ref } from "@firebase/storage";
 import { X } from "lucide-react";
 import Image from "next/image";
 import UploadForm from "./UploadForm";
@@ -14,18 +13,14 @@ import UploadForm from "./UploadForm";
 const ImagePane = ({
   filename,
   imageSrc,
+  path,
 }: {
   filename: string;
   imageSrc: string;
+  path: string;
 }) => {
-  const handleReset = () => {
-    // local
-    // setImageSrc("");
-    // todo server action revalidatePath?
-
-    // remote
-    const storageRef = ref(storage, filename);
-    deleteObject(storageRef);
+  const handleReset = async () => {
+    await removeRemoteImage(filename, path);
   };
 
   return (

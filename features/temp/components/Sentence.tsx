@@ -55,7 +55,11 @@ const Sentence = async ({
         ))}
         <div className="space-y-2 rounded-lg bg-white bg-opacity-60 p-3">
           <div className="text-xs font-extrabold">🎥 分鏡</div>
-          <ImagePane filename={`${docId}/${index}`} imageSrc={imageSrc} />
+          <ImagePane
+            filename={`${docId}/${index}`}
+            imageSrc={imageSrc}
+            path={docId}
+          />
         </div>
       </div>
     </div>
