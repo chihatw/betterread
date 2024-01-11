@@ -45,6 +45,7 @@ const UploadForm = ({ filename }: { filename: string }) => {
     if (!form) return;
     form.reset();
     setImageSrc("");
+    // debug 削除した後 revalidatePath 必要？
   };
 
   return (
