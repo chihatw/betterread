@@ -2,11 +2,10 @@
 
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { db } from "@/firebase/client";
 import { cn } from "@/lib/utils";
-import { doc, updateDoc } from "@firebase/firestore";
 import { useEffect, useState } from "react";
 import { ENDDATE, QUESTIONS } from "../constants";
+import { updateString } from "../services";
 
 const Question = ({
   text,
@@ -31,7 +30,7 @@ const Question = ({
     } catch (e) {}
   }, [remote, lIndex, qIndex]);
 
-  const handleChange = (value: string) => {
+  const handleChange = async (value: string) => {
     setValue(value);
     const updated = [...remote];
     if (!updated[lIndex]) {
@@ -43,8 +42,7 @@ const Question = ({
   };
 
   const handleUpdate = (value: string[][]) => {
-    updateDoc(doc(db, "temp", docId), { string: JSON.stringify(value) });
-    console.log("updated!");
+    updateString(docId, value);
   };
 
   return (
