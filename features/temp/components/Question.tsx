@@ -22,7 +22,7 @@ const Question = ({
 }) => {
   const now = new Date();
   const endDate = new Date(ENDDATE);
-  const [value, setValue] = useState(ANSWERS.yes);
+  const [value, setValue] = useState(ANSWERS.null);
 
   const items = Object.values(ANSWERS);
 
@@ -36,7 +36,7 @@ const Question = ({
     setValue(value);
     const updated = [...remote];
     if (!updated[lIndex]) {
-      updated[lIndex] = [ANSWERS.yes];
+      updated[lIndex] = [ANSWERS.null];
     }
     updated[lIndex][qIndex] = value;
 
