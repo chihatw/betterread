@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import { ENDDATE, QUESTIONS } from "../constants";
+import { ANSWERS, ENDDATE } from "../constants";
 import { updateString } from "../services";
 
 const Question = ({
@@ -22,7 +22,9 @@ const Question = ({
 }) => {
   const now = new Date();
   const endDate = new Date(ENDDATE);
-  const [value, setValue] = useState(text === QUESTIONS[2] ? "行" : "沒興趣");
+  const [value, setValue] = useState(ANSWERS.yes);
+
+  const items = Object.values(ANSWERS);
 
   useEffect(() => {
     try {
@@ -34,7 +36,7 @@ const Question = ({
     setValue(value);
     const updated = [...remote];
     if (!updated[lIndex]) {
-      updated[lIndex] = ["沒興趣", "沒興趣", "行"];
+      updated[lIndex] = [ANSWERS.yes];
     }
     updated[lIndex][qIndex] = value;
 
@@ -54,7 +56,7 @@ const Question = ({
         onValueChange={(value) => handleChange(value)}
         disabled={endDate < now}
       >
-        {["沒興趣", "行", "不行"].map((item, index) => (
+        {items.map((item, index) => (
           <div
             key={index}
             className={cn(
@@ -62,18 +64,11 @@ const Question = ({
               item === value ? "bg-slate-200" : "",
             )}
           >
-            <RadioGroupItem
-              value={item}
-              checked={item === value}
-              disabled={text === QUESTIONS[2] && item === "沒興趣"}
-            />
+            <RadioGroupItem value={item} checked={item === value} />
             <Label
               className={cn(
                 "whitespace-nowrap",
                 item === value ? "font-extrabold" : "",
-                text === QUESTIONS[2] && item === "沒興趣"
-                  ? "font-extralight text-gray-300"
-                  : "",
               )}
             >
               {item}
