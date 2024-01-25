@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import AnswerDisplay from "@/features/temp/components/AnswerDisplay";
 import { storage } from "@/firebase/client";
 import { ref, uploadBytes } from "@firebase/storage";
 import { X } from "lucide-react";
@@ -14,7 +15,13 @@ const SwitchInput = dynamic(
   { ssr: false },
 );
 
-const UploadForm = ({ filename }: { filename: string }) => {
+const UploadForm = ({
+  filename,
+  answer,
+}: {
+  filename: string;
+  answer: string;
+}) => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const [imageSrc, setImageSrc] = useState("");
 
@@ -45,20 +52,22 @@ const UploadForm = ({ filename }: { filename: string }) => {
     if (!form) return;
     form.reset();
     setImageSrc("");
-    // debug 削除した後 revalidatePath 必要？
   };
 
   return (
     <form className="relative mx-auto max-w-lg flex-1" ref={formRef}>
       {imageSrc ? (
-        <Image
-          src={imageSrc}
-          alt=""
-          className="rounded-lg"
-          width={512}
-          height={512}
-          sizes="(max-width: 768px) 100vw, (max-height: 1200px) 50vw, 50vw"
-        />
+        <div className="relative">
+          <AnswerDisplay answer={answer} />
+          <Image
+            src={imageSrc}
+            alt=""
+            className="rounded-lg"
+            width={512}
+            height={512}
+            sizes="(max-width: 768px) 100vw, (max-height: 1200px) 50vw, 50vw"
+          />
+        </div>
       ) : (
         <SwitchInput handleChange={handleChange} />
       )}

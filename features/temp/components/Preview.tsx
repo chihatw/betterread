@@ -6,10 +6,12 @@ const Preview = ({
   opposite,
   lines_j,
   self,
+  answers,
 }: {
   opposite: string;
   lines_j: string[];
   self: string;
+  answers: string[][];
 }) => {
   return (
     <>
@@ -25,6 +27,7 @@ const Preview = ({
             japanese={line}
             key={index}
             docId={self}
+            answer={answers?.[index]?.[0] || ""}
           />
         ))}
       </div>

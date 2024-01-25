@@ -7,10 +7,12 @@ const SentencePreview = async ({
   index,
   japanese,
   docId,
+  answer,
 }: {
   index: number;
   japanese: string;
   docId: string;
+  answer: string;
 }) => {
   let imageSrc = "";
   try {
@@ -39,7 +41,7 @@ const SentencePreview = async ({
           <div className="text-sm font-extrabold">{japanese}</div>
           {imageSrc ? (
             <div className="space-y-2 rounded-lg bg-white bg-opacity-60 p-3">
-              <ImagePreview imageSrc={imageSrc} />
+              <ImagePreview imageSrc={imageSrc} answer={answer} />
             </div>
           ) : null}
         </div>

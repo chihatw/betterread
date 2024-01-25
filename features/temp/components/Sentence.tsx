@@ -59,6 +59,7 @@ const Sentence = async ({
             filename={`${docId}/${index}`}
             imageSrc={imageSrc}
             path={docId}
+            answer={value[index][0]}
           />
         </div>
       </div>

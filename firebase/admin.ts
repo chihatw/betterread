@@ -21,11 +21,12 @@ export const getDocumentCount = async (collection: string) => {
   return snapshot.data().count;
 };
 
-export const getAnswers = async (docId: string) => {
+export const getAnswers = async (docId: string): Promise<string[][]> => {
   const snapshot = await dbAdmin.collection(COLLECTION).doc(docId).get();
   if (snapshot.exists) {
     const { string } = snapshot.data() as any;
     const remote = JSON.parse(string);
     return remote;
   }
+  return [];
 };
