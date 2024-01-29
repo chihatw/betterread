@@ -3,7 +3,7 @@ import Sentence from "@/features/temp/components/Sentence";
 import { Articles, DOCID } from "@/features/temp/constants";
 import { getAnswers } from "@/firebase/admin";
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 const lines_j = Articles.lisan.japanese.split("\n");
 const lines_c = Articles.lisan.chinese.split("\n");
