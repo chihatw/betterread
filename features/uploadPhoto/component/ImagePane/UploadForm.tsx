@@ -1,13 +1,9 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import AnswerDisplay from "@/features/temp/components/AnswerDisplay";
-import { storage } from "@/firebase/client";
-import { ref, uploadBytes } from "@firebase/storage";
-import { X } from "lucide-react";
+import AnswerDisplay from "@/features/questions/components/AnswerDisplay";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { ChangeEvent, useRef, useState } from "react";
-import { setLocalPreview } from "../..";
+import { setLocalPreview } from "../../services";
 
 // navigator 使用
 const SwitchInput = dynamic(
@@ -16,11 +12,11 @@ const SwitchInput = dynamic(
 );
 
 const UploadForm = ({
-  filename,
   answer,
+  uploadImage,
 }: {
-  filename: string;
   answer: string;
+  uploadImage: (file: File) => void;
 }) => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const [imageSrc, setImageSrc] = useState("");
@@ -43,15 +39,7 @@ const UploadForm = ({
     setLocalPreview(file, setImageSrc);
 
     // remote
-    const storageRef = ref(storage, filename);
-    uploadBytes(storageRef, file);
-  };
-
-  const handleReset = () => {
-    const form = formRef.current;
-    if (!form) return;
-    form.reset();
-    setImageSrc("");
+    uploadImage(file);
   };
 
   return (
@@ -71,17 +59,6 @@ const UploadForm = ({
       ) : (
         <SwitchInput handleChange={handleChange} />
       )}
-
-      {imageSrc ? (
-        <Button
-          size="icon"
-          variant={"ghost"}
-          className="absolute right-2 top-2 bg-white text-red-500"
-          onClick={handleReset}
-        >
-          <X />
-        </Button>
-      ) : null}
     </form>
   );
 };

@@ -1,37 +1,54 @@
 "use client";
 
-import { removeRemoteImage } from "@/actions";
 import { Button } from "@/components/ui/button";
-import AnswerDisplay from "@/features/temp/components/AnswerDisplay";
+import AnswerDisplay from "@/features/questions/components/AnswerDisplay";
+import { ANSWERS } from "@/features/questions/constants";
+import { storage } from "@/firebase/client";
+import { getDownloadURL, ref } from "@firebase/storage";
 import { X } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import UploadForm from "./UploadForm";
 
 /**
- * filename で指定された画像を cloudstorage から取得
+ * imagePath で指定された画像を cloudstorage から取得
  * 取得できなかった場合は、 upload 用の form を表示
  * navigator を使って、 mobile の場合はカメラを起動させる
  */
 const ImagePane = ({
-  filename,
-  imageSrc,
-  path,
   answer,
+  imagePath,
+  uploadImage,
+  removeImage,
 }: {
-  filename: string;
-  imageSrc: string;
-  path: string;
   answer: string;
+  imagePath: string;
+  uploadImage: (file: File) => void;
+  removeImage: () => void;
 }) => {
-  const handleReset = async () => {
-    await removeRemoteImage(filename, path);
-  };
+  const [imageSrc, setImageSrc] = useState("");
+
+  useEffect(() => {
+    if (!imagePath) {
+      setImageSrc("");
+      return;
+    }
+    const fetchData = async () => {
+      try {
+        const imageSrc = (await getDownloadURL(ref(storage, imagePath))) || "";
+        setImageSrc(imageSrc);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchData();
+  }, [imagePath]);
 
   return (
     <div className="relative mx-auto flex max-w-lg justify-center">
       {imageSrc ? (
         <div className="relative">
-          <AnswerDisplay answer={answer} />
+          <AnswerDisplay answer={answer || ANSWERS.no} />
           <Image
             src={imageSrc}
             alt=""
@@ -42,14 +59,14 @@ const ImagePane = ({
           />
         </div>
       ) : (
-        <UploadForm filename={filename} answer={answer} />
+        <UploadForm answer={answer} uploadImage={uploadImage} />
       )}
       {imageSrc ? (
         <Button
           size="icon"
           variant={"ghost"}
           className="absolute right-2 top-2 bg-white text-red-500"
-          onClick={handleReset}
+          onClick={removeImage}
         >
           <X />
         </Button>

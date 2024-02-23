@@ -1,17 +1,13 @@
-export const QUESTIONS = [
-  // "可以想像畫面嗎？",
-  // "可以想像畫面裡的人物表情嗎？（沒有人的話，請選“不行”）",
-  // "如果你是導演的話，可以拍這個場景嗎？",
-  "這場分鏡必須拍到人物全身嗎？",
-];
+export const QUESTION = "這場分鏡有使用特效嗎？";
+
+export const PIE_LABELS = { vfx: "電影科幻度", comp: "分鏡完成度" };
 
 export const ANSWERS = {
-  null: "分鏡上沒有人",
-  yes: "一定要拍到腳",
-  no: "不用拍到腳",
+  no: "沒有使用特效",
+  yes: "有使用特效",
 };
 
-export const ENDDATE = "2024-02-22 01:00:00";
+export const ENDDATE = "2024-02-29 01:00:00";
 
 export const COLLECTION = "temp";
 

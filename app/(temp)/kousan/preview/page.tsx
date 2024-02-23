@@ -1,13 +1,18 @@
-import Preview from "@/features/temp/components/Preview";
-import { Articles, DOCID } from "@/features/temp/constants";
-import { getAnswers } from "@/firebase/admin";
+import Preview from "@/features/questions/components/Preview";
+import { Articles, DOCID } from "@/features/questions/constants";
+import { getAnswers } from "@/features/questions/services/server";
 
 const lines_j = Articles.lisan.japanese.split("\n");
 
 const KouSanPreview = async () => {
-  const value = await getAnswers(DOCID.kousan);
+  const { answers, imagePaths } = await getAnswers(DOCID.kousan);
   return (
-    <Preview opposite="lisan" lines_j={lines_j} self="kousan" answers={value} />
+    <Preview
+      opposite="lisan"
+      lines_j={lines_j}
+      answers={answers}
+      imagePaths={imagePaths}
+    />
   );
 };
 

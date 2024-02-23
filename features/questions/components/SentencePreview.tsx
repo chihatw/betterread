@@ -6,19 +6,17 @@ import ImagePreview from "./ImagePreview";
 const SentencePreview = async ({
   index,
   japanese,
-  docId,
   answer,
+  imagePath,
 }: {
   index: number;
   japanese: string;
-  docId: string;
   answer: string;
+  imagePath: string;
 }) => {
-  let imageSrc = "";
-  try {
-    const filename = `${docId}/${index}`;
-    imageSrc = await getDownloadURL(ref(storage, filename));
-  } catch (e) {}
+  const imageSrc = !!imagePath
+    ? await getDownloadURL(ref(storage, imagePath))
+    : "";
 
   if (!index) {
     return (

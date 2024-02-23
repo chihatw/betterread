@@ -7,5 +7,5 @@ import { storage } from "./firebase/client";
 export const removeRemoteImage = async (filename: string, path: string) => {
   const storageRef = ref(storage, filename);
   await deleteObject(storageRef);
-  revalidatePath(`/${path}`);
+  revalidatePath(path);
 };

@@ -1,4 +1,4 @@
-import { chinese_digits } from "@/features/temp/constants";
+import { chinese_digits } from "@/features/questions/constants";
 
 export const sleep = async (ms: number) =>
   await new Promise((resolve) => setTimeout(resolve, ms));

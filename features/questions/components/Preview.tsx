@@ -5,13 +5,13 @@ import SentencePreview from "./SentencePreview";
 const Preview = ({
   opposite,
   lines_j,
-  self,
   answers,
+  imagePaths,
 }: {
   opposite: string;
   lines_j: string[];
-  self: string;
-  answers: string[][];
+  answers: string[];
+  imagePaths: string[];
 }) => {
   return (
     <>
@@ -23,11 +23,11 @@ const Preview = ({
       <div className="space-y-10 px-4">
         {lines_j.map((line, index) => (
           <SentencePreview
+            key={index}
             index={index}
             japanese={line}
-            key={index}
-            docId={self}
-            answer={answers?.[index]?.[0] || ""}
+            answer={answers?.[index] || ""}
+            imagePath={imagePaths[index]}
           />
         ))}
       </div>
