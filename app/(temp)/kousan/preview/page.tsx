@@ -10,8 +10,8 @@ const KouSanPreview = async () => {
     <Preview
       opposite="lisan"
       lines_j={lines_j}
-      answers={answers}
-      imagePaths={imagePaths}
+      answers={answers || []}
+      imagePaths={imagePaths || []}
     />
   );
 };
