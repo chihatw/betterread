@@ -12,7 +12,7 @@ const Page = async () => {
   const { answers, imagePaths } = await getAnswers(DOCID.kousan);
 
   return (
-    <>
+    <div>
       <CountDown opposite="lisan" />
       <Questions
         docId={DOCID.kousan}
@@ -21,7 +21,7 @@ const Page = async () => {
         answers={answers}
         imagePaths={imagePaths}
       />
-    </>
+    </div>
   );
 };
 

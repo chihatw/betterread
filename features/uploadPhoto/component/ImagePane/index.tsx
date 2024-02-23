@@ -44,6 +44,11 @@ const ImagePane = ({
     fetchData();
   }, [imagePath]);
 
+  const handleClick = () => {
+    setImageSrc("");
+    removeImage();
+  };
+
   return (
     <div className="relative mx-auto flex max-w-lg justify-center">
       {imageSrc ? (
@@ -66,7 +71,7 @@ const ImagePane = ({
           size="icon"
           variant={"ghost"}
           className="absolute right-2 top-2 bg-white text-red-500"
-          onClick={removeImage}
+          onClick={handleClick}
         >
           <X />
         </Button>

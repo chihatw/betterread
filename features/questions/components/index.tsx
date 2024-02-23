@@ -1,7 +1,6 @@
 "use client";
-import { removeRemoteImage } from "@/actions";
 import { storage } from "@/firebase/client";
-import { ref, uploadBytes } from "@firebase/storage";
+import { deleteObject, ref, uploadBytes } from "@firebase/storage";
 import { useMemo } from "react";
 import { ANSWERS, PIE_LABELS } from "../constants";
 import { updateAnswers, updateImagePaths } from "../services/actions";
@@ -53,6 +52,10 @@ const Questions = ({
   };
 
   const uploadImage = async (index: number, imagePath: string, file: File) => {
+    // storage
+    const storageRef = ref(storage, imagePath);
+    await uploadBytes(storageRef, file);
+
     // store
     const cloned: string[] = [];
     for (let i = 0; i < japanese.length; i++) {
@@ -60,13 +63,13 @@ const Questions = ({
     }
     cloned[index] = imagePath;
     updateImagePaths(docId, cloned);
-
-    // storage
-    const storageRef = ref(storage, imagePath);
-    await uploadBytes(storageRef, file);
   };
 
   const removeImage = async (index: number, imagePath: string) => {
+    // storage
+    const storageRef = ref(storage, imagePath);
+    await deleteObject(storageRef);
+
     // store
     const cloned: string[] = [];
     for (let i = 0; i < japanese.length; i++) {
@@ -74,9 +77,6 @@ const Questions = ({
     }
     cloned[index] = "";
     updateImagePaths(docId, cloned);
-
-    // storage
-    await removeRemoteImage(imagePath, `/${docId}`);
   };
 
   return (
