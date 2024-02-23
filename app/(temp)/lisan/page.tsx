@@ -15,10 +15,10 @@ const Page = async () => {
       <CountDown opposite="kousan" />
       <Questions
         docId={DOCID.lisan}
-        answers={answers}
         chinese={lines_c}
         japanese={lines_j}
-        imagePaths={imagePaths}
+        answers={answers || []}
+        imagePaths={imagePaths || []}
       />
     </>
   );

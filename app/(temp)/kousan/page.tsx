@@ -18,8 +18,8 @@ const Page = async () => {
         docId={DOCID.kousan}
         chinese={lines_c}
         japanese={lines_j}
-        answers={answers}
-        imagePaths={imagePaths}
+        answers={answers || []}
+        imagePaths={imagePaths || []}
       />
     </div>
   );
