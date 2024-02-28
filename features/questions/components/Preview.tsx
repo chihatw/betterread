@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { ANSWERS } from "../constants";
 import SentencePreview from "./SentencePreview";
 
 const Preview = ({
@@ -26,7 +27,7 @@ const Preview = ({
             key={index}
             index={index}
             japanese={line}
-            answer={answers?.[index] || ""}
+            answer={answers?.[index] || ANSWERS.no}
             imagePath={imagePaths[index]}
           />
         ))}
