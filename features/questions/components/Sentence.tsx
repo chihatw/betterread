@@ -2,23 +2,24 @@ import ImagePane from "@/features/uploadPhoto/component/ImagePane";
 import Question from "./Question";
 
 const Sentence = async ({
+  user,
   index,
   japanese,
   chinese,
   answer,
   imagePath,
-  handleChange,
-  uploadImage,
-  removeImage,
+  collections,
 }: {
+  user: string;
   index: number;
   japanese: string;
   chinese: string;
   answer: string;
   imagePath: string;
-  handleChange: (answer: string) => void;
-  uploadImage: (file: File) => void;
-  removeImage: () => void;
+  collections: {
+    storyboard: string;
+    imagePath: string;
+  };
 }) => {
   if (!index) {
     return (
@@ -42,16 +43,19 @@ const Sentence = async ({
         <div className="space-y-2 rounded-lg bg-white bg-opacity-60 p-3">
           <div className="text-xs font-extrabold">🎥 分鏡</div>
           <ImagePane
+            index={index}
+            user={user}
             answer={answer}
             imagePath={imagePath}
-            uploadImage={uploadImage}
-            removeImage={removeImage}
+            collections={collections}
           />
         </div>
+        {/* debug */}
         <Question
+          index={index}
           answer={answer}
-          handleChange={handleChange}
           hasImage={!!imagePath}
+          collections={collections}
         />
       </div>
     </div>

@@ -13,6 +13,7 @@ export const SwitchInput = ({
   if (isMobile()) {
     return (
       <Input
+        name="image"
         type="file"
         capture="environment"
         accept="image/*"
@@ -23,6 +24,7 @@ export const SwitchInput = ({
   }
   return (
     <Input
+      name="image"
       type="file"
       accept="image/*"
       onChange={handleChange}

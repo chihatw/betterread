@@ -3,18 +3,27 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { ANSWERS, ENDDATE, QUESTION } from "../constants";
+import { setStoryboardAnswer } from "../services/actions";
 
 const Question = ({
+  index,
   answer,
   hasImage,
-  handleChange,
+  collections,
 }: {
+  index: number;
   answer: string;
   hasImage: boolean;
-  handleChange: (answer: string) => void;
+  collections: {
+    storyboard: string;
+    imagePath: string;
+  };
 }) => {
+  const pathname = usePathname();
+  const form = useRef<null | HTMLFormElement>(null);
   const now = new Date();
   const endDate = new Date(ENDDATE);
   const [value, setValue] = useState<string | undefined>(undefined);
@@ -35,9 +44,11 @@ const Question = ({
     setValue(ANSWERS.no);
   }, [answer, hasImage]);
 
-  const _handleChange = async (value: string) => {
-    setValue(value);
-    handleChange(value);
+  const action = async (formData: FormData) => {
+    const answer = formData.get("answer")?.toString() || "";
+    if (!answer) return;
+
+    await setStoryboardAnswer(collections.storyboard, index, answer, pathname);
   };
 
   return (
@@ -46,36 +57,43 @@ const Question = ({
         {QUESTION}
         {!hasImage ? <span>（請先上傳分鏡）</span> : null}
       </div>
-      <RadioGroup
-        className="flex flex-wrap"
-        value={value}
-        onValueChange={(value) => _handleChange(value)}
-        disabled={endDate < now}
+      <form
+        ref={form}
+        action={action}
+        onChange={() => form.current!.requestSubmit()}
       >
-        {items.map((item, index) => (
-          <div
-            key={index}
-            className={cn(
-              "flex items-center space-x-2 rounded-lg p-2",
-              item === value ? "bg-slate-200" : "",
-            )}
-          >
-            <RadioGroupItem
-              value={item}
-              checked={item === value}
-              disabled={!hasImage}
-            />
-            <Label
+        <RadioGroup
+          name="answer"
+          className="flex flex-wrap"
+          value={value}
+          onValueChange={(value) => setValue(value)}
+          disabled={endDate < now}
+        >
+          {items.map((item, index) => (
+            <div
+              key={index}
               className={cn(
-                "whitespace-nowrap",
-                item === value ? "font-extrabold" : "",
+                "flex items-center space-x-2 rounded-lg p-2",
+                item === value ? "bg-slate-200" : "",
               )}
             >
-              {item}
-            </Label>
-          </div>
-        ))}
-      </RadioGroup>
+              <RadioGroupItem
+                value={item}
+                checked={item === value}
+                disabled={!hasImage}
+              />
+              <Label
+                className={cn(
+                  "whitespace-nowrap",
+                  item === value ? "font-extrabold" : "",
+                )}
+              >
+                {item}
+              </Label>
+            </div>
+          ))}
+        </RadioGroup>
+      </form>
     </div>
   );
 };

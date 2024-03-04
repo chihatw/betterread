@@ -1,16 +1,8 @@
 "use client";
-import { storage } from "@/firebase/client";
-import { deleteObject, ref, uploadBytes } from "@firebase/storage";
-import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { ANSWERS, PIE_LABELS } from "../constants";
 import { ImagePath, StoryboardAnswer } from "../schema";
-import {
-  removeImagePath,
-  removeStoryboardAnswer,
-  setImagePath,
-  setStoryboardAnswer,
-} from "../services/actions";
+import { getCompletionRatio, getVFXRatio } from "../services/utils";
 import PieGraph from "./PieGraph";
 import Sentence from "./Sentence";
 
@@ -32,51 +24,11 @@ const Questions = ({
   };
   storyboardAnswers: StoryboardAnswer[];
 }) => {
-  const pathname = usePathname();
-  const ratio_comp = useMemo(() => {
-    const total = japanese.length - 1;
-    if (!total) return 0;
-
-    const count = imagePaths.reduce((acc, cur) => acc + (!!cur ? 1 : 0), 0);
-    return Math.round((count / total) * 100);
-  }, [imagePaths, japanese]);
-
-  const ratio_vfx = useMemo(() => {
-    const total = imagePaths.reduce((acc, cur) => acc + (!!cur ? 1 : 0), 0);
-    if (!total) return 0;
-
-    let count = 0;
-    for (let i = 0; i < storyboardAnswers.length; i++) {
-      const { answer } = storyboardAnswers[i];
-      if (answer !== ANSWERS.yes) continue;
-      count++;
-    }
-    return Math.round((count / total) * 100);
-  }, [imagePaths, storyboardAnswers]);
-
-  const handleChange = (index: number, answer: string) => {
-    setStoryboardAnswer(collections.storyboard, index, answer, pathname);
-  };
-
-  const uploadImage = async (index: number, imagePath: string, file: File) => {
-    // storage
-    const storageRef = ref(storage, imagePath);
-    await uploadBytes(storageRef, file);
-
-    // store
-    setImagePath(collections.imagePath, index, `/${user}/${index}`, pathname);
-    setStoryboardAnswer(collections.storyboard, index, ANSWERS.no, pathname);
-  };
-
-  const removeImage = async (index: number, imagePath: string) => {
-    // storage
-    const storageRef = ref(storage, imagePath);
-    await deleteObject(storageRef);
-
-    // store
-    removeImagePath(collections.imagePath, index, pathname);
-    removeStoryboardAnswer(collections.storyboard, index, pathname);
-  };
+  const { ratio_comp, ratio_vfx } = useMemo(() => {
+    const ratio_comp = getCompletionRatio(japanese, imagePaths);
+    const ratio_vfx = getVFXRatio(imagePaths, storyboardAnswers);
+    return { ratio_comp, ratio_vfx };
+  }, [japanese, imagePaths, storyboardAnswers]);
 
   return (
     <div className="space-y-10 px-4">
@@ -89,23 +41,21 @@ const Questions = ({
         />
       </div>
       {japanese.map((_, index) => {
-        const imagePath = `${user}/${index}`;
+        const imagePath =
+          imagePaths.find((item) => item.index === index)?.path || "";
+        const answer =
+          storyboardAnswers.find((item) => item.index === index)?.answer ||
+          ANSWERS.no;
         return (
           <Sentence
+            user={user}
             key={index}
             index={index}
-            answer={
-              storyboardAnswers.find((item) => item.index === index)?.answer ||
-              ANSWERS.no
-            }
+            answer={answer}
             chinese={chinese[index]}
             japanese={japanese[index]}
-            imagePath={
-              imagePaths.find((item) => item.index === index)?.path || ""
-            }
-            handleChange={(answer: string) => handleChange(index, answer)}
-            uploadImage={(file: File) => uploadImage(index, imagePath, file)}
-            removeImage={() => removeImage(index, imagePath)}
+            imagePath={imagePath}
+            collections={collections}
           />
         );
       })}

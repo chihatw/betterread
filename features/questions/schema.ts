@@ -12,3 +12,8 @@ export interface ImagePath {
   index: number;
   path: string;
 }
+
+export interface QuestionProps {
+  imagePaths: ImagePath[];
+  storyboardAnswers: StoryboardAnswer[];
+}

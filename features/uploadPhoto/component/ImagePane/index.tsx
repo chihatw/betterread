@@ -3,11 +3,14 @@
 import { Button } from "@/components/ui/button";
 import AnswerDisplay from "@/features/questions/components/AnswerDisplay";
 import { ANSWERS } from "@/features/questions/constants";
+import { removeImagePath } from "@/features/questions/services/actions";
 import { storage } from "@/firebase/client";
 import { getDownloadURL, ref } from "@firebase/storage";
 import { X } from "lucide-react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { removeImage } from "../../services";
 import UploadForm from "./UploadForm";
 
 /**
@@ -16,16 +19,22 @@ import UploadForm from "./UploadForm";
  * navigator を使って、 mobile の場合はカメラを起動させる
  */
 const ImagePane = ({
+  user,
+  index,
   answer,
   imagePath,
-  uploadImage,
-  removeImage,
+  collections,
 }: {
+  user: string;
+  index: number;
   answer: string;
   imagePath: string;
-  uploadImage: (file: File) => void;
-  removeImage: () => void;
+  collections: {
+    storyboard: string;
+    imagePath: string;
+  };
 }) => {
+  const pathname = usePathname();
   const [imageSrc, setImageSrc] = useState("");
 
   useEffect(() => {
@@ -44,9 +53,10 @@ const ImagePane = ({
     fetchData();
   }, [imagePath]);
 
-  const handleClick = () => {
+  const action = async () => {
     setImageSrc("");
-    removeImage();
+    await removeImage(user, index);
+    await removeImagePath(collections, index, pathname);
   };
 
   return (
@@ -64,17 +74,25 @@ const ImagePane = ({
           />
         </div>
       ) : (
-        <UploadForm answer={answer} uploadImage={uploadImage} />
+        <UploadForm
+          user={user}
+          index={index}
+          answer={answer}
+          collections={collections}
+        />
       )}
       {imageSrc ? (
-        <Button
-          size="icon"
-          variant={"ghost"}
-          className="absolute right-2 top-2 bg-white text-red-500"
-          onClick={handleClick}
-        >
-          <X />
-        </Button>
+        <form action={action}>
+          <Button
+            type="submit"
+            size="icon"
+            variant={"ghost"}
+            className="absolute right-2 top-2 bg-white text-red-500"
+            // onClick={handleClick}
+          >
+            <X />
+          </Button>
+        </form>
       ) : null}
     </div>
   );
