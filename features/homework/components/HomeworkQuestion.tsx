@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { ENDDATE } from "@/features/questions/constants";
 import { Trash2 } from "lucide-react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { removeHomeworkAnswer } from "../services/actions";
@@ -33,30 +34,47 @@ const HomeworkQuestion = ({
 
       <div className="space-y-4 pl-5">
         <div className="grid grid-cols-[auto,1fr,auto] items-center gap-x-4 ">
-          <div className="space-x-1">
+          <div className="space-x-1 whitespace-nowrap">
             {answer ? <span>📬</span> : null}
-            <span>答案</span>
+            <span className="whitespace-nowrap">答案</span>
           </div>
           <div className="border-b border-black p-2">
-            {answer.split("\n").map((line, index) => (
-              <div key={index}>{line}</div>
-            ))}
+            {answer.split("\n").map((line, index) => {
+              const isURL = line.substring(0, 4) === "http";
+
+              return (
+                <div key={index} className="break-all p-0">
+                  {isURL ? (
+                    <Link
+                      href={line}
+                      className="font-medium text-blue-600 hover:underline "
+                    >
+                      {line}
+                    </Link>
+                  ) : (
+                    <span>{line}</span>
+                  )}
+                </div>
+              );
+            })}
           </div>
-          <form
-            action={() => {
-              handleRemove(index);
-              removeHomeworkAnswer(collection, index, pathname);
-            }}
-          >
-            <Button
-              size="icon"
-              type="submit"
-              variant="ghost"
-              disabled={!answer || disabled}
+          {disabled ? null : (
+            <form
+              action={() => {
+                handleRemove(index);
+                removeHomeworkAnswer(collection, index, pathname);
+              }}
             >
-              <Trash2 />
-            </Button>
-          </form>
+              <Button
+                size="icon"
+                type="submit"
+                variant="ghost"
+                disabled={!answer}
+              >
+                <Trash2 />
+              </Button>
+            </form>
+          )}
         </div>
         <HomeworkAnswerForm
           answer={answer}
