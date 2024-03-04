@@ -1,25 +1,38 @@
 "use client";
 import { storage } from "@/firebase/client";
 import { deleteObject, ref, uploadBytes } from "@firebase/storage";
+import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { ANSWERS, PIE_LABELS } from "../constants";
-import { updateAnswers, updateImagePaths } from "../services/actions";
+import { ImagePath, StoryboardAnswer } from "../schema";
+import {
+  removeImagePath,
+  removeStoryboardAnswer,
+  setImagePath,
+  setStoryboardAnswer,
+} from "../services/actions";
 import PieGraph from "./PieGraph";
 import Sentence from "./Sentence";
 
 const Questions = ({
-  docId,
-  answers,
+  user,
   chinese,
   japanese,
   imagePaths,
+  collections,
+  storyboardAnswers,
 }: {
-  docId: string;
-  answers: string[];
+  user: string;
   chinese: string[];
   japanese: string[];
-  imagePaths: string[];
+  imagePaths: ImagePath[];
+  collections: {
+    storyboard: string;
+    imagePath: string;
+  };
+  storyboardAnswers: StoryboardAnswer[];
 }) => {
+  const pathname = usePathname();
   const ratio_comp = useMemo(() => {
     const total = japanese.length - 1;
     if (!total) return 0;
@@ -33,22 +46,16 @@ const Questions = ({
     if (!total) return 0;
 
     let count = 0;
-    for (let i = 0; i < answers.length; i++) {
-      const answer = answers[i];
-      const imagePath = imagePaths[i];
-      if (!imagePath || answer !== ANSWERS.yes) continue;
+    for (let i = 0; i < storyboardAnswers.length; i++) {
+      const { answer } = storyboardAnswers[i];
+      if (answer !== ANSWERS.yes) continue;
       count++;
     }
     return Math.round((count / total) * 100);
-  }, [answers, imagePaths]);
+  }, [imagePaths, storyboardAnswers]);
 
   const handleChange = (index: number, answer: string) => {
-    const cloned: string[] = [];
-    for (let i = 0; i < japanese.length; i++) {
-      cloned[i] = answers[i] || ANSWERS.no;
-    }
-    cloned[index] = answer;
-    updateAnswers(docId, cloned);
+    setStoryboardAnswer(collections.storyboard, index, answer, pathname);
   };
 
   const uploadImage = async (index: number, imagePath: string, file: File) => {
@@ -57,12 +64,8 @@ const Questions = ({
     await uploadBytes(storageRef, file);
 
     // store
-    const cloned: string[] = [];
-    for (let i = 0; i < japanese.length; i++) {
-      cloned[i] = imagePaths[i] || "";
-    }
-    cloned[index] = imagePath;
-    updateImagePaths(docId, cloned);
+    setImagePath(collections.imagePath, index, `/${user}/${index}`, pathname);
+    setStoryboardAnswer(collections.storyboard, index, ANSWERS.no, pathname);
   };
 
   const removeImage = async (index: number, imagePath: string) => {
@@ -71,12 +74,8 @@ const Questions = ({
     await deleteObject(storageRef);
 
     // store
-    const cloned: string[] = [];
-    for (let i = 0; i < japanese.length; i++) {
-      cloned[i] = imagePaths[i] || "";
-    }
-    cloned[index] = "";
-    updateImagePaths(docId, cloned);
+    removeImagePath(collections.imagePath, index, pathname);
+    removeStoryboardAnswer(collections.storyboard, index, pathname);
   };
 
   return (
@@ -90,15 +89,20 @@ const Questions = ({
         />
       </div>
       {japanese.map((_, index) => {
-        const imagePath = `${docId}/${index}`;
+        const imagePath = `${user}/${index}`;
         return (
           <Sentence
             key={index}
             index={index}
-            answer={answers[index]}
+            answer={
+              storyboardAnswers.find((item) => item.index === index)?.answer ||
+              ANSWERS.no
+            }
             chinese={chinese[index]}
             japanese={japanese[index]}
-            imagePath={imagePaths[index]}
+            imagePath={
+              imagePaths.find((item) => item.index === index)?.path || ""
+            }
             handleChange={(answer: string) => handleChange(index, answer)}
             uploadImage={(file: File) => uploadImage(index, imagePath, file)}
             removeImage={() => removeImage(index, imagePath)}

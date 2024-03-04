@@ -7,23 +7,33 @@ import {
 } from "@/features/homework/services/utils";
 import Questions from "@/features/questions/components";
 import CountDown from "@/features/questions/components/CountDown";
-import { Articles, DOCID } from "@/features/questions/constants";
-import { getAnswers } from "@/features/questions/services/server";
+import { Articles } from "@/features/questions/constants";
+import {
+  getImagePaths,
+  getStoryboardAnswers,
+} from "@/features/questions/services/server";
 
 export const dynamic = "force-dynamic";
 
-const collection = "homework_lisan";
+const user = "lisan";
+const collections = {
+  homework: "homework_lisan",
+  storyboard: "storyboard_lisan",
+  imagePath: "imagePath_lisan",
+};
 const lines_j = Articles.kousan.japanese.split("\n");
 const lines_c = Articles.kousan.chinese.split("\n");
 const homework = HOMEWORKS.lisan;
 
 const Page = async () => {
-  const { answers, imagePaths } = await getAnswers(DOCID.lisan);
-  const rawAnswers = await getHomeworkAnswers(collection);
+  const storyboardAnswers = await getStoryboardAnswers(collections.storyboard);
+  const imagePaths = await getImagePaths(collections.imagePath);
+
+  const _homeworkAnswers = await getHomeworkAnswers(collections.homework);
 
   const indexedHomework = buildIndexedHomework(homework);
   const { homeworkAnswers, ratio } = buildHomeworkAnswers(
-    rawAnswers,
+    _homeworkAnswers,
     indexedHomework,
   );
 
@@ -34,14 +44,15 @@ const Page = async () => {
         ratio={ratio}
         homework={indexedHomework}
         answers={homeworkAnswers}
-        collection={collection}
+        collection={collections.homework}
       />
       <Questions
-        docId={DOCID.lisan}
+        user={user}
         chinese={lines_c}
         japanese={lines_j}
-        answers={answers || []}
-        imagePaths={imagePaths || []}
+        imagePaths={imagePaths}
+        collections={collections}
+        storyboardAnswers={storyboardAnswers}
       />
     </>
   );

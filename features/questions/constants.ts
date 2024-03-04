@@ -9,8 +9,6 @@ export const ANSWERS = {
 
 export const ENDDATE = "2024-03-06 01:00:00";
 
-export const COLLECTION = "temp";
-
 export const DOCID = {
   lisan: "lisan",
   kousan: "kousan",

@@ -4,7 +4,7 @@ import { ENDDATE } from "@/features/questions/constants";
 import { Trash2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import { removeAnswer } from "../services/actions";
+import { removeHomeworkAnswer } from "../services/actions";
 import HomeworkAnswerForm from "./HomeworkAnswerForm";
 
 type Props = {
@@ -45,7 +45,7 @@ const HomeworkQuestion = ({
           <form
             action={() => {
               handleRemove(index);
-              removeAnswer(collection, index, pathname);
+              removeHomeworkAnswer(collection, index, pathname);
             }}
           >
             <Button

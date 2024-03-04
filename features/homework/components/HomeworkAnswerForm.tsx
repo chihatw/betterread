@@ -5,7 +5,7 @@ import { ENDDATE } from "@/features/questions/constants";
 import { Loader2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
-import { setAnswer } from "../services/actions";
+import { setHomeworkAnswer } from "../services/actions";
 
 type Props = {
   answer: string;
@@ -51,7 +51,7 @@ const HomeworkAnswerForm = ({
   const action = async () => {
     startTransition(async () => {
       try {
-        await setAnswer(collection, index, props.input, pathname);
+        await setHomeworkAnswer(collection, index, props.input, pathname);
         form.current!.reset();
         refreshOpticalAnswers(); // <- これがなかったら optimistic の値が更新されない
         setProps((prev) => ({ ...prev, disabled: true }));

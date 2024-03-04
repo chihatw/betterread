@@ -1,18 +1,19 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ANSWERS } from "../constants";
+import { ImagePath, StoryboardAnswer } from "../schema";
 import SentencePreview from "./SentencePreview";
 
 const Preview = ({
   opposite,
   lines_j,
-  answers,
   imagePaths,
+  storyboardAnswers,
 }: {
   opposite: string;
   lines_j: string[];
-  answers: string[];
-  imagePaths: string[];
+  imagePaths: ImagePath[];
+  storyboardAnswers: StoryboardAnswer[];
 }) => {
   return (
     <>
@@ -27,8 +28,13 @@ const Preview = ({
             key={index}
             index={index}
             japanese={line}
-            answer={answers?.[index] || ANSWERS.no}
-            imagePath={imagePaths[index]}
+            answer={
+              storyboardAnswers.find((item) => item.index === index)?.answer ||
+              ANSWERS.no
+            }
+            imagePath={
+              imagePaths.find((item) => item.index === index)?.path || ""
+            }
           />
         ))}
       </div>
