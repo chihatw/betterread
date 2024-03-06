@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import AnswerDisplay from "@/features/questions/components/AnswerDisplay";
-import { ANSWERS } from "@/features/questions/constants";
+import { ANSWERS, ENDDATE } from "@/features/questions/constants";
 import { removeImagePath } from "@/features/questions/services/actions";
 import { storage } from "@/firebase/client";
 import { getDownloadURL, ref } from "@firebase/storage";
@@ -34,6 +34,8 @@ const ImagePane = ({
     imagePath: string;
   };
 }) => {
+  const now = new Date();
+  const endDate = new Date(ENDDATE);
   const pathname = usePathname();
   const [imageSrc, setImageSrc] = useState("");
 
@@ -81,14 +83,13 @@ const ImagePane = ({
           collections={collections}
         />
       )}
-      {imageSrc ? (
+      {imageSrc && now > endDate ? (
         <form action={action}>
           <Button
             type="submit"
             size="icon"
             variant={"ghost"}
             className="absolute right-2 top-2 bg-white text-red-500"
-            // onClick={handleClick}
           >
             <X />
           </Button>
