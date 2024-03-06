@@ -13,7 +13,7 @@ import {
   getStoryboardAnswers,
 } from "@/features/questions/services/server";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 const user = "kousan";
 const collections = {
