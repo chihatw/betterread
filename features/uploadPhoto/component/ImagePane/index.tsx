@@ -83,7 +83,7 @@ const ImagePane = ({
           collections={collections}
         />
       )}
-      {imageSrc && now > endDate ? (
+      {imageSrc && endDate > now ? (
         <form action={action}>
           <Button
             type="submit"
