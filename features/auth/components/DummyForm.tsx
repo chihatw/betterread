@@ -16,6 +16,8 @@ const INITIAL_STATE: Props = {
   errMsg: "",
 };
 
+const HOME_PAGE = "/lisan";
+
 const DummyForm = () => {
   const router = useRouter();
   const form = useRef<null | HTMLFormElement>(null);
@@ -45,7 +47,7 @@ const DummyForm = () => {
         return;
       }
       setState(INITIAL_STATE);
-      router.push("/kousan");
+      router.push(HOME_PAGE);
     });
   };
 
