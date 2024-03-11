@@ -1,9 +1,8 @@
 "use client";
 import { useMemo } from "react";
-import { ANSWERS, PIE_LABELS } from "../constants";
+import { ANSWERS } from "../constants";
 import { ImagePath, StoryboardAnswer } from "../schema";
 import { getCompletionRatio, getVFXRatio } from "../services/utils";
-import PieGraph from "./PieGraph";
 import Sentence from "./Sentence";
 
 const Questions = ({
@@ -25,21 +24,14 @@ const Questions = ({
   storyboardAnswers: StoryboardAnswer[];
 }) => {
   const { ratio_comp, ratio_vfx } = useMemo(() => {
+    // debug
     const ratio_comp = getCompletionRatio(japanese, imagePaths);
     const ratio_vfx = getVFXRatio(imagePaths, storyboardAnswers);
     return { ratio_comp, ratio_vfx };
   }, [japanese, imagePaths, storyboardAnswers]);
 
   return (
-    <div className="space-y-10 px-4">
-      <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-2">
-        <PieGraph label={PIE_LABELS.comp} ratio={ratio_comp} />
-        <PieGraph
-          label={PIE_LABELS.vfx}
-          ratio={ratio_vfx}
-          strokeColor="stroke-purple-600"
-        />
-      </div>
+    <div className="space-y-10 px-4 py-20">
       {japanese.map((_, index) => {
         const imagePath =
           imagePaths.find((item) => item.index === index)?.path || "";
@@ -59,14 +51,6 @@ const Questions = ({
           />
         );
       })}
-      <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-2">
-        <PieGraph label={PIE_LABELS.comp} ratio={ratio_comp} />
-        <PieGraph
-          label={PIE_LABELS.vfx}
-          ratio={ratio_vfx}
-          strokeColor="stroke-purple-600"
-        />
-      </div>
     </div>
   );
 };

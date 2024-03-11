@@ -1,3 +1,4 @@
+import HomeWorkProgressPies from "@/features/homework/components/HomeWorkProgressPies";
 import HomeworkPane from "@/features/homework/components/HomeworkPane";
 import { HOMEWORKS } from "@/features/homework/constants";
 import { getHomeworkAnswers } from "@/features/homework/services/server";
@@ -12,8 +13,9 @@ import {
   getImagePaths,
   getStoryboardAnswers,
 } from "@/features/questions/services/server";
+import { getVFXRatio } from "@/features/questions/services/utils";
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 const user = "kousan";
 const collections = {
@@ -35,11 +37,16 @@ const Page = async () => {
   const { homeworkAnswers, ratio } = buildHomeworkAnswers(
     _homeworkAnswers,
     indexedHomework,
+    lines_j,
+    imagePaths,
   );
+
+  const ratio_vfx = getVFXRatio(imagePaths, storyboardAnswers);
 
   return (
     <div>
       <CountDown opposite="lisan" />
+      <HomeWorkProgressPies ratio={ratio} ratio_vfx={ratio_vfx} />
       <HomeworkPane
         ratio={ratio}
         homework={indexedHomework}
@@ -54,6 +61,7 @@ const Page = async () => {
         collections={collections}
         storyboardAnswers={storyboardAnswers}
       />
+      <HomeWorkProgressPies ratio={ratio} ratio_vfx={ratio_vfx} />
     </div>
   );
 };
