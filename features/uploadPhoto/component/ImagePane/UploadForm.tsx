@@ -34,7 +34,6 @@ const UploadForm = ({
   // ファイルが選択された時
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     // action を発火させる
-    // todo check モバイルの動作確認
     form.current!.requestSubmit();
   };
 

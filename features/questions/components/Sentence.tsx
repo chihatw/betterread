@@ -50,7 +50,6 @@ const Sentence = async ({
             collections={collections}
           />
         </div>
-        {/* debug */}
         <Question
           index={index}
           answer={answer}

@@ -15,7 +15,7 @@ import {
 } from "@/features/questions/services/server";
 import { getVFXRatio } from "@/features/questions/services/utils";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 const user = "lisan";
 const collections = {
@@ -34,7 +34,7 @@ const Page = async () => {
   const _homeworkAnswers = await getHomeworkAnswers(collections.homework);
 
   const indexedHomework = buildIndexedHomework(homework);
-  // debug
+
   const { homeworkAnswers, ratio } = buildHomeworkAnswers(
     _homeworkAnswers,
     indexedHomework,
