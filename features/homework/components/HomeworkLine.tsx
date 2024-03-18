@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { IndexedHomework } from "../schema";
 import HomeworkQuestion from "./HomeworkQuestion";
 
@@ -11,7 +12,18 @@ type Props = {
 const HomeworkLine = ({ line, answers, collection, removeAnswer }: Props) => {
   return (
     <div className="space-y-4 px-4">
-      <div>{line.sentence}</div>
+      {line.sentenceImagePaths.map((path, index) => (
+        <div key={index} className="flex justify-center">
+          <Image src={path} alt="" width={500} height={500} />
+        </div>
+      ))}
+
+      <div className="grid">
+        {line.sentence.split("\n").map((line, index) => {
+          if (!line) return <div key={index} className="h-[1em]" />;
+          return <div key={index}>{line}</div>;
+        })}
+      </div>
       <div>
         {line.questions.map((q, index) => (
           <HomeworkQuestion
@@ -21,6 +33,7 @@ const HomeworkLine = ({ line, answers, collection, removeAnswer }: Props) => {
             answer={answers[line.indexes[index]]}
             collection={collection}
             handleRemove={removeAnswer}
+            questionImagePaths={line.questionImagePaths[index]}
           />
         ))}
       </div>

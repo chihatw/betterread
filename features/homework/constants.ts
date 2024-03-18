@@ -1,82 +1,72 @@
 import { Homework } from "./schema";
 
+const common: Homework[] = [
+  {
+    sentence: "請填寫「？」的部分",
+    questions: ["遠景？", "中景？", "近景？"],
+    sentenceImagePaths: ["/images/picnic.jpeg", "/images/guitar.jpeg"],
+    questionImagePaths: [["/images/couple.jpeg"]],
+  },
+  {
+    sentence: "請填寫「？」的部分",
+    questions: ["遠景？", "中景？", "近景？"],
+    sentenceImagePaths: [],
+    questionImagePaths: [["/images/airport.jpeg"]],
+  },
+  {
+    sentence: "想一想，你在紅燈停車的時候，看到的是什麼？",
+    questions: ["遠景？", "中景？", "近景？"],
+    sentenceImagePaths: [],
+    questionImagePaths: [],
+  },
+  {
+    sentence: "A和B,哪一幅圖片中球員離藍框比較遠？",
+    questions: ["哪一幅圖？", "怎麼判斷？"],
+    sentenceImagePaths: [],
+    questionImagePaths: [["/images/basketball.jpeg"]],
+  },
+  {
+    sentence: `你是個電影製作人，有負責製作費用管理。
+
+    你挑選了賈静雯飾演主角後，招聘了一位外籍導演。
+    在導演腦袋裡有上面這樣的畫面，但語言溝通不順。
+
+    最後，你要導演畫分鏡圖。`,
+    questions: [
+      "為了算一算拍攝成本，想知道什麼？",
+      "上面A～E哪一幅分鏡圖，比較容易知道拍攝成本？",
+      "為什麼？",
+    ],
+    sentenceImagePaths: ["/images/airport_image.jpeg"],
+    questionImagePaths: [
+      [],
+      [
+        "/images/airport_a.jpeg",
+        "/images/airport_b.jpeg",
+        "/images/airport_c.jpeg",
+        "/images/airport_d.jpeg",
+        "/images/airport_e.jpeg",
+      ],
+    ],
+  },
+  {
+    sentence: `小孩在客廳玩了半天打仗遊戲，心想：
+
+「生活在二戰後世代的許多人們，曾以為人類在經歷兩次大規模互相殘殺的戰爭悲劇後，能夠體認到戰爭的殘酷、以及和平的可貴，會更珍惜、更謹慎保護得來不易的寧靜歲月。
+
+然而卻不然，歷史總是不斷重演，為了爭奪資源、為了榮光使命、為了歷史定位、為了意氣之爭，為了各種原因，人們總是一再將自己推入戰爭的漩渦。
+
+在這其中，最可憐的就屬手無寸鐵、痛失家園、從此顛沛流離的人民。
+
+兩次世界大戰黑白紀錄片中帶著家當、揹著棉被和鍋碗瓢盆、拖著一家大小逃難的難民身影，到了今年烏俄戰爭，彩色清晰的電視或網路直播畫面，不變的仍是拖著家當行李、腋下夾著孩子的玩偶、趕著一家大小逃難的難民身影，看得令人無奈，看得令人感嘆自身的渺小無力。」
+
+背後的媽媽看到的是什麼？`,
+    questions: ["遠景？", "中景？", "近景？"],
+    sentenceImagePaths: ["/images/game.jpeg"],
+    questionImagePaths: [],
+  },
+];
 export const HOMEWORKS: { [key: string]: Homework[] } = {
-  lisan: [
-    {
-      sentence: "聽到「は」，聽者要確認什麼？",
-      questions: ["確認什麼？"],
-    },
-    {
-      sentence:
-        "讀者看到原文「あの人は」，讀者要確認什麼？ 確認後，讀者如何理解「あの人は」？",
-      questions: ["確認什麼？", "如何理解？"],
-    },
-    {
-      sentence: "下面句子是什麼意思？",
-      questions: ["友達が結婚した", "同僚が帰った"],
-    },
-    {
-      sentence:
-        "如果「を」的前面在句子上扮演的角色是「控制的對象」的話，「が」的前面（「友達」「同僚」）在句子意思上就扮演的角色是什麼？",
-      questions: ["角色是什麼？"],
-    },
-    {
-      sentence: "下面句子是什麼意思？",
-      questions: ["おかずが注文した"],
-    },
-    {
-      sentence: "下面單字、句子是什麼意思？",
-      questions: ["「ですけど」", "「580元ですけど言いました」"],
-    },
-    {
-      sentence: "下面單字、句子是什麼意思？",
-      questions: ["「あります」", "「普通にあります」"],
-    },
-    {
-      sentence:
-        "除了小菜之外，在麵店可以點的是什麼？（這不是語法問題，只想了解麵店賣什麼東西）",
-      questions: ["除了小菜之外"],
-    },
-  ],
-  kousan: [
-    {
-      sentence: "次の動詞の動作主は誰ですか？",
-      questions: [
-        "原文：雑談する",
-        "原文：おしゃべりしていました",
-        "修正：話しかけてくる",
-        "修正：おしゃべりしてきました",
-      ],
-    },
-    {
-      sentence: "次の言葉の違いは何ですか？",
-      questions: [
-        "「a. 犬が走っている」vs「b.犬が走ってくる」",
-        "「a. おじさんがお喋りしている」vs「b. おじさんがお喋りしてくる」",
-      ],
-    },
-    {
-      sentence: "次の文から一番重要な動詞を一つ選んでください",
-      questions: [
-        "原文：私の元上司は歯が痛かった時に、中国に残って治療を受けなくて、チケットを買って台湾に戻った",
-        "修正：私の元上司は歯が痛くなった時に、わざわざ台湾まで飛行機で戻って治療した",
-      ],
-    },
-    {
-      sentence: "次の言葉の違いは何ですか？",
-      questions: [
-        "「a. びっくりしました」vs「b. 驚きました」",
-        "「a. いろんな話」vs「b. いろいろな話」",
-      ],
-    },
-    {
-      sentence: "次の言葉の違いは何ですか？",
-      questions: ["「a. 痛！」vs「b. 這是痛的感覺！」"],
-    },
-    {
-      sentence:
-        "「『自己有偏見』を気付けたこと」に対して、おじさんに感謝を表したい時、「気づけて」の語形はどうなりますか？（難易度★★★★★）",
-      questions: ["「きづけて」會變成？"],
-    },
-  ],
+  lisan: common,
+  kousan: common,
 };

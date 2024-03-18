@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { ENDDATE } from "@/features/questions/constants";
 import { Trash2 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
@@ -14,6 +15,7 @@ type Props = {
   answer: string;
   collection: string;
   handleRemove: (index: number) => void;
+  questionImagePaths: string[];
 };
 
 const HomeworkQuestion = ({
@@ -22,11 +24,19 @@ const HomeworkQuestion = ({
   answer,
   collection,
   handleRemove,
+  questionImagePaths,
 }: Props) => {
   const disabled = useMemo(() => new Date(ENDDATE) < new Date(), []);
   const pathname = usePathname();
   return (
     <div className="space-y-4 pb-8">
+      {questionImagePaths
+        ? questionImagePaths.map((path, index) => (
+            <div key={index} className="flex justify-center">
+              <Image src={path} alt="" width={500} height={500} />
+            </div>
+          ))
+        : null}
       <div className="flex gap-x-2 font-extralight">
         <div className="pt-0.5 text-xs">{index + 1}</div>
         <div>{question}</div>
