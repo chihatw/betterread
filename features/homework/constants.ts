@@ -66,6 +66,7 @@ const common: Homework[] = [
     questionImagePaths: [],
   },
 ];
+
 export const HOMEWORKS: { [key: string]: Homework[] } = {
   lisan: common,
   kousan: common,
