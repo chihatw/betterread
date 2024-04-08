@@ -21,7 +21,13 @@ const HomeworkLine = ({ line, answers, collection, removeAnswer }: Props) => {
       <div className="grid">
         {line.sentence.split("\n").map((line, index) => {
           if (!line) return <div key={index} className="h-[1em]" />;
-          return <div key={index}>{line}</div>;
+          return (
+            <div key={index}>
+              {line.split("\n").map((item, index) => (
+                <div key={index}>{item}</div>
+              ))}
+            </div>
+          );
         })}
       </div>
       <div>

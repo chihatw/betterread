@@ -39,7 +39,11 @@ const HomeworkQuestion = ({
         : null}
       <div className="flex gap-x-2 font-extralight">
         <div className="pt-0.5 text-xs">{index + 1}</div>
-        <div>{question}</div>
+        <div>
+          {question.split("\n").map((item, index) => (
+            <div key={index}>{item}</div>
+          ))}
+        </div>
       </div>
 
       <div className="space-y-4 pl-5">

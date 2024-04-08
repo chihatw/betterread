@@ -1,73 +1,184 @@
 import { Homework } from "./schema";
 
-const common: Homework[] = [
-  {
-    sentence: "請填寫「？」的部分",
-    questions: ["遠景？", "中景？", "近景？"],
-    sentenceImagePaths: ["/images/picnic.jpeg", "/images/guitar.jpeg"],
-    questionImagePaths: [["/images/couple.jpeg"]],
-  },
-  {
-    sentence: "請填寫「？」的部分",
-    questions: ["遠景？", "中景？", "近景？"],
-    sentenceImagePaths: [],
-    questionImagePaths: [["/images/airport.jpeg"]],
-  },
-  {
-    sentence: "想一想，你在紅燈停車的時候，看到的是什麼？",
-    questions: ["遠景？", "中景？", "近景？"],
-    sentenceImagePaths: [],
-    questionImagePaths: [],
-  },
-  {
-    sentence: "A和B,哪一幅圖片中球員離藍框比較遠？",
-    questions: ["哪一幅圖？", "怎麼判斷？"],
-    sentenceImagePaths: [],
-    questionImagePaths: [["/images/basketball.jpeg"]],
-  },
-  {
-    sentence: `你是個電影製作人，有負責製作費用管理。
-
-    你挑選了賈静雯飾演主角後，招聘了一位外籍導演。
-    在導演腦袋裡有上面這樣的畫面，但語言溝通不順。
-
-    最後，你要導演畫分鏡圖。`,
-    questions: [
-      "為了算一算拍攝成本，想知道什麼？",
-      "上面A～E哪一幅分鏡圖，比較容易知道拍攝成本？",
-      "為什麼？",
-    ],
-    sentenceImagePaths: ["/images/airport_image.jpeg"],
-    questionImagePaths: [
-      [],
-      [
-        "/images/airport_a.jpeg",
-        "/images/airport_b.jpeg",
-        "/images/airport_c.jpeg",
-        "/images/airport_d.jpeg",
-        "/images/airport_e.jpeg",
-      ],
-    ],
-  },
-  {
-    sentence: `小孩在客廳玩了半天打仗遊戲，心想：
-
-「生活在二戰後世代的許多人們，曾以為人類在經歷兩次大規模互相殘殺的戰爭悲劇後，能夠體認到戰爭的殘酷、以及和平的可貴，會更珍惜、更謹慎保護得來不易的寧靜歲月。
-
-然而卻不然，歷史總是不斷重演，為了爭奪資源、為了榮光使命、為了歷史定位、為了意氣之爭，為了各種原因，人們總是一再將自己推入戰爭的漩渦。
-
-在這其中，最可憐的就屬手無寸鐵、痛失家園、從此顛沛流離的人民。
-
-兩次世界大戰黑白紀錄片中帶著家當、揹著棉被和鍋碗瓢盆、拖著一家大小逃難的難民身影，到了今年烏俄戰爭，彩色清晰的電視或網路直播畫面，不變的仍是拖著家當行李、腋下夾著孩子的玩偶、趕著一家大小逃難的難民身影，看得令人無奈，看得令人感嘆自身的渺小無力。」
-
-背後的媽媽看到的是什麼？`,
-    questions: ["遠景？", "中景？", "近景？"],
-    sentenceImagePaths: ["/images/game.jpeg"],
-    questionImagePaths: [],
-  },
-];
-
 export const HOMEWORKS: { [key: string]: Homework[] } = {
-  lisan: common,
-  kousan: common,
+  lisan: [
+    {
+      sentence: `黃桑作文第二句：
+        「上上週，台北有一起死了兩個人的食物中毒事件。從新聞裡得知，這兩個人都在素食餐廳「寶林茶室」吃了米製的粿條和河粉的餐點。」`,
+      questions: [
+        `李桑知不知道這條新聞？
+        如果有知道的話，你人在哪裡知道？`,
+        "想一想，黃桑得知這條新聞時，人在哪裡？",
+        `台灣媒體用什麼畫面報導這個新聞？
+        如果使用多畫面的話，哪一種畫面比較印象深刻？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+    {
+      sentence: `黃桑作文第三句：
+        「兩位死者聽說平常都很健康，吃完的隔天雖然身體不舒服但也都還有說有笑。但到了第三天病情突然急轉直下，最後昏迷過世。」`,
+      questions: [
+        `想一想，黃桑得知這個訊息時，人在哪裡？
+        如果跟上一句一樣的話，寫「跟上一句一樣」就好。`,
+        `兩位死者，隔天在有說有笑，他們人在哪裡有說有笑？
+        周圍有沒有人？`,
+        `兩位死者，第三天昏迷過世，他們人在哪裡過世？
+        周圍有沒有人？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+    {
+      sentence: `黃桑作文第四句：
+        「後來，在台灣首次出現的「邦克烈酸」在死者的體內被檢測出來。」`,
+      questions: [
+        `想一想，黃桑得知這個訊息時，人在哪裡？`,
+        `檢測出「邦克烈酸」的人是誰？
+        這個人在哪裡？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+    {
+      sentence: `黃桑作文第五句：
+        「到目前為止，還有其他３２人也因為吃了這間茶室的東西而食物中毒。」`,
+      questions: [
+        `想一想,32位受害者之中，症狀最嚴重的人症狀如何？
+      人在哪裡？
+      當天他跟誰一起吃的？`,
+        `想一想,32位受害者之中，症狀最輕微的人症狀如何？
+      人在哪裡？
+      當天他跟誰一起吃的？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+    {
+      sentence: `黃桑作文第六句：
+      「在這次的事件之前，全世界中因吃到含邦克烈酸食物而死亡的事件只有印尼、莫三比克和中國三個國家發生過，所以習慣外食的台灣人都很驚訝。」`,
+      questions: [
+        `想一想，黃桑怎麼知道這個訊息？`,
+        `想一想，在印尼，什麼樣的人因吃到含邦克烈酸食物而死亡？
+        死者多還是少？
+        人在哪裡吃到邦克烈酸？`,
+        `黃桑有寫「台灣人都很驚訝」，
+        想一想，台灣人之中，最驚訝的是什麼樣的人？
+        他由什麼媒體得知這個新聞？
+        人在哪裡？`,
+        `得知這條新聞後，還是沒有驚訝的人，有沒有？
+        如果有的話，他是什麼樣的人？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+    {
+      sentence: `黃桑作文第七句：
+      「邦克烈酸是從椰子、玉米或是米等製品的發酵過程中，受到一種叫做唐菖蒲伯克氏菌細菌污染而產生的毒素。它的毒性很強，即使健康的人只要吃下一毫克也會致命。而且它無色無味，加熱了也不會消失。」`,
+      questions: [
+        `想一想，黃桑怎麼知道這個訊息？`,
+        `想一想，在什麼樣的情況下，米製品會發酵到產生邦克烈酸？`,
+        `想一想，關於保管米製麵的方式，「寶林茶室」跟其他餐廳有沒有差別？
+        如果有的話，什麼樣的差別？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+    {
+      sentence: `黃桑作文第八句：
+      「最新的調查報告是：雖然從廚師的手上和糞便驗出了邦克烈酸，但還沒有找到直接的證據來證明兇手是誰。」`,
+      questions: [
+        `想一想，黃桑怎麼知道這個訊息？`,
+        `想一想，廚師是一位，還是多位？`,
+        `誰檢驗廚師的手和糞便？
+        人在哪裡檢驗？`,
+        `想一想，誰在調查？
+        人在哪裡調查？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+  ],
+  kousan: [
+    {
+      sentence: `李桑作文第二句：
+      「最近家裡在整修」`,
+      questions: [
+        `想一想，關於整修這件事，李桑最開心的是什麼？
+        在做什麼時候，感到開心？
+        最煩惱的是什麼？
+        在做什麼時候，感到煩惱？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+    {
+      sentence: `李桑作文第三句：
+      「因為要整理的地方很多,因此有很多要重新購買的東西」`,
+      questions: [
+        `李桑什麼時候在想要重新買什麼？
+      人在哪裡？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+    {
+      sentence: `李桑作文第四句：
+      「像是燈具,因為有的燈具都已經用了20年了,真的該換了」`,
+      questions: [
+        `燈具對這二十年有什麼感受？
+      它們在二十年之間看到的是什麼？
+      最印象深刻的是哪一刻？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+    {
+      sentence: `李桑作文第五句：
+      「光是房間用的燈,及浴室用的燈,我就選了好久」`,
+      questions: [
+        `想一想，李桑選擇家具時，考慮不能太貴、不能太醜、不能太多化學原料，那，選擇燈具時考慮什麼？`,
+        `想一想，李桑家具從目錄中選，那，怎麼選燈？
+      人在哪裡？
+      一個人選還是跟別人一起選？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+    {
+      sentence: `李桑作文第六句：
+      「後來連家具也要更換,從一大本的目錄中選擇家具」`,
+      questions: [
+        `想一想，李桑為什麼不去實體家具店當地選擇家具？`,
+        "想一想，誰把目錄給李桑？或怎麼獲得目錄？",
+        `李桑一開始看到大本目錄時，心想什麼？`,
+        `李桑收到目錄後，把大本目錄放在哪裡？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+    {
+      sentence: `李桑作文第七句：
+      「一向決定很快的我,居然會選擇困難　不能太貴,不能太醜,不能太多化學原料 考慮了好久終於做出決定　只選擇3樣家具花了我3小時」`,
+      questions: [
+        `李桑在什麼時候花了三個小時選擇家具？
+        人在哪裡？
+        一個人選還是跟大家一起選？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+    {
+      sentence: `李桑作文第八句：
+      「我的真是選擇困難啊」`,
+      questions: [
+        `李桑在什麼時候這樣想？
+        人在哪裡？`,
+        `這樣想之前，李桑在做什麼？`,
+        `這樣想之後，李桑做什麼？`,
+      ],
+      sentenceImagePaths: [],
+      questionImagePaths: [],
+    },
+  ],
 };

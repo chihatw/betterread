@@ -15,7 +15,7 @@ import {
 } from "@/features/questions/services/server";
 import { getVFXRatio } from "@/features/questions/services/utils";
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 const user = "lisan";
 const collections = {
