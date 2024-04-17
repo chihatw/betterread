@@ -22,12 +22,15 @@ export function buildHomeworkAnswers(
   const homeworkAnswers: string[] = [];
 
   let answered = 0;
-  for (let i = 0; i <= (indexedHomework.at(-1)?.indexes.at(-1) || 0); i++) {
-    const answer = rawAnswers.find((a) => a.index === i)?.answer || "";
-    if (!!answer) {
-      answered++;
+
+  if (!!indexedHomework.length) {
+    for (let i = 0; i <= (indexedHomework.at(-1)?.indexes.at(-1) || 0); i++) {
+      const answer = rawAnswers.find((a) => a.index === i)?.answer || "";
+      if (!!answer) {
+        answered++;
+      }
+      homeworkAnswers.push(answer);
     }
-    homeworkAnswers.push(answer);
   }
 
   answered += imagePaths.length;
